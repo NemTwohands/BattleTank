@@ -6,17 +6,32 @@
 #include "TankAIController.h"
 #include "Tank.h"
 #include "AIController.h"
-#include "TankAIController.generated.h"
-
-UCLASS()
-class BATTLETANK_API ATankAIController : public AAIController {
-	GENERATED_BODY()
-
-		virtual void BeginPlay() override;
-private:
-	ATank * GetControlledTank() const;
-
-	ATank * GetPlayerTank() const;
+#include "Engine/World.h"
+#include "TankAIController.h"
 
 
-};
+void ATankAIController::BeginPlay()
+{
+	Super::BeginPlay();
+
+
+}
+
+// Called every frame
+void ATankAIController::Tick(float DeltaTime)
+{
+	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn()); 
+	auto ControlledTank = Cast<ATank>(GetPawn());
+
+	Super::Tick(DeltaTime);
+	if (PlayerTank)
+	{
+	
+		ControlledTank->AimAt(PlayerTank->GetActorLocation());
+
+		ControlledTank->Fire();
+	}
+}
+
+
+

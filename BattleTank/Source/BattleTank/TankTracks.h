@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "BattleTank.h"
 #include "Components/StaticMeshComponent.h"
 #include "TankTracks.generated.h"
 
@@ -16,11 +16,14 @@ class BATTLETANK_API UTankTracks : public UStaticMeshComponent
 	
 public:
 
-	UFUNCTION(BluePrintCallable, Category = Input)
+	UFUNCTION(BluePrintCallable, Category = "Input")
 	void SetThrottle(float Throttle);
 	
+
+
 	UPROPERTY(EditDefaultsOnly)
-		float TrackmaxDrivingForce = 40000;
+		float TrackMaxDrivingForce = 40000;
+
 
 
 };

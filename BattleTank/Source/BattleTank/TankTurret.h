@@ -17,7 +17,7 @@ public:
 	void Rotate(float DegreesPerSecond);
 
 private:
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float MaxDegreesPerSecond = 40;
 	
 	

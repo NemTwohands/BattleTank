@@ -1,20 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "TankPlayerController.h"
-#include "Tank.h"
+#include "TankAimingComponent.h"
 #include "BattleTank.h"
 #include "Engine/World.h"
 
 
 void ATankPlayerController_Cpp::BeginPlay() {
-	auto ControlledTank = GetControlledTank();
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("PlayerController BeginPlay"));
-	if (!ControlledTank) {
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController Not possesing a tank"));
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController Possesing %s"), *ControlledTank->GetName());
-	}
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (ensure(AimingComponent)) { return; }
+		FoundAimingComponent(AimingComponent);
 }
 
 
@@ -23,18 +18,13 @@ void ATankPlayerController_Cpp::Tick(float DeltaTime){
 	AimTowardsCrossHair();
 }
 
-
-
-ATank* ATankPlayerController_Cpp::GetControlledTank() const {
-	return Cast<ATank>(GetPawn());
-}
-
 void ATankPlayerController_Cpp::AimTowardsCrossHair() {
-	if (!GetControlledTank()) { return; }
-
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (ensure(AimingComponent)) { return; }
+	
 	FVector HitLocation; // OUT parameter
 	if (GetSightRayHitLocation(HitLocation)) {
-		GetControlledTank()->AimAt(HitLocation);
+		AimingComponent->AimAt(HitLocation);
 	}
 }
 

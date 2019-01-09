@@ -4,8 +4,8 @@
 #pragma once
 
 #include "TankAIController.h"
-#include "Tank.h"
 #include "AIController.h"
+#include "TankAimingComponent.h"
 #include "Engine/World.h"
 #include "TankAIController.h"
 
@@ -20,17 +20,15 @@ void ATankAIController::BeginPlay()
 // Called every frame
 void ATankAIController::Tick(float DeltaTime)
 {
-	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn()); 
-	auto ControlledTank = Cast<ATank>(GetPawn());
+	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn(); 
+	auto ControlledTank = GetPawn();
 
-	Super::Tick(DeltaTime);
-	if (PlayerTank)
-	{
+	if (!ensure(PlayerTank && ControlledTank)) { return; }
 	
-		ControlledTank->AimAt(PlayerTank->GetActorLocation());
+	MoveToActor(PlayerTank, AcceptanceRadius);
+	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 
-		ControlledTank->Fire();
-	}
 }
 
 

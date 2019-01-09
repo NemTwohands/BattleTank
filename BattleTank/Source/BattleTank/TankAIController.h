@@ -2,8 +2,6 @@
 
 
 #pragma once
-
-
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
@@ -17,6 +15,6 @@ private:
 
 	virtual void Tick(float DeltaSeconds) override;
 
-
+	float  AcceptanceRadius = 3000;
 
 };

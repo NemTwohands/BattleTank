@@ -30,7 +30,7 @@ public:
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-		void Initialise(UTankBarrel *BarrelToSet, UTankTurret *TurretToSet);
+		void  (UTankBarrel *BarrelToSet, UTankTurret *TurretToSet);
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 		void Fire();
 protected:

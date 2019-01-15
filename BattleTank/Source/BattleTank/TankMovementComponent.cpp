@@ -1,11 +1,11 @@
-#include "BattleTank.h"
 #include "TankMovementComponent.h"
+#include "BattleTank.h"
 #include "TankTracks.h"
 
 
 
 void UTankMovementComponent::Initialise(UTankTracks* LeftTrackToSet, UTankTracks* RightTrackToSet) {
-	if (!ensure(LeftTrackToSet && !RightTrackToSet)) { return; }
+	if (ensure(!LeftTrackToSet && !RightTrackToSet)) { return; }
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 }
@@ -21,8 +21,6 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 
 	auto RightThrow = FVector::CrossProduct(AIForwardIntention,TankForward).Z;
 	IntendTurnRight(RightThrow);
-
-
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw) {

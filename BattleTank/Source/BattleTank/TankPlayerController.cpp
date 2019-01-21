@@ -8,7 +8,7 @@
 void ATankPlayerController_Cpp::BeginPlay() {
 	Super::BeginPlay();
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-	if (ensure(AimingComponent)) { return; }
+	if (!ensure(AimingComponent)) { return; }
 		FoundAimingComponent(AimingComponent);
 }
 
@@ -20,7 +20,8 @@ void ATankPlayerController_Cpp::Tick(float DeltaTime){
 
 void ATankPlayerController_Cpp::AimTowardsCrossHair() {
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-	if (ensure(AimingComponent)) { return; }
+	if (!ensure(AimingComponent)) { return; }
+
 	
 	FVector HitLocation; // OUT parameter
 	if (GetSightRayHitLocation(HitLocation)) {
